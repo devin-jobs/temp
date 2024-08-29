@@ -1,0 +1,149 @@
+html {
+  body {
+    .el-dialog {
+      // border-radius: var(--el-border-radius-base);
+      border-radius: 20px;
+      box-shadow: -6px 0px 18px 0px rgba(196, 200, 212, 0.3);
+
+      &__body {
+        padding: var(--el-dialog-padding-primary);
+
+        // .el-form:not(.el-form--inline) {
+        //   margin-right: 30px;
+
+        //   .el-form-item:last-child {
+        //     margin-bottom: 0;
+        //   }
+
+        //   .el-date-editor,
+        //   .el-select {
+        //     width: 100%;
+        //   }
+        // }
+      }
+
+      &.is-fullscreen {
+        margin: 0;
+        border-radius: 0;
+
+        .el-dialog__body {
+          height: calc(100vh - 54px - 68px);
+          overflow-y: auto;
+        }
+      }
+    }
+    /* el-pagination分页 */
+    .el-pagination {
+      --el-pagination-border-radius: var(--el-border-radius-base);
+      justify-content: center !important;
+      margin-top: var(--el-margin);
+    }
+  }
+}
+// 按钮样式重置
+.el-button {
+  border-radius: 8px !important;
+}
+// 日历样式重置
+.el-range-editor--small.el-input__inner {
+  // border-radius: 20px;
+  // border: 1px solid #d6dff2;
+}
+
+// 表格样式调整 斑马纹
+.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  // background: #f1f5ff !important;
+}
+// 因为一般表格上面输入框没有阴影 统一加上
+.form-table-wrapper {
+  /* 新的表格样式 */
+  .el-input__wrapper,
+  .el-select__wrapper {
+    box-shadow: 0px 0px 4px 0px rgba(48, 123, 214, 0.1);
+    border-radius: 8px;
+    min-height: 36px;
+    // border: 1px solid #d6dff2;
+  }
+  .el-textarea__inner {
+    box-shadow: 0px 0px 4px 0px rgba(48, 123, 214, 0.1);
+    border-radius: 8px;
+    // border: 1px solid #d6dff2;
+  }
+  // 按钮样式重置
+  .el-button {
+    border-radius: 8px !important;
+    border: none;
+  }
+}
+// 弹窗中的表单
+.form-dialog-wapper {
+  .el-textarea__inner,
+  .el-input__wrapper,
+  .el-select__wrapper {
+    height: 36px;
+    // border: 1px solid #d6dff2;
+  }
+}
+//阴影被覆盖的让他有阴影
+.form-table-border {
+  .el-input__wrapper,
+  .el-select__wrapper,
+  .el-textarea__inner {
+    box-shadow: 0 0 0 1px var(--el-border-color) inset;
+  }
+}
+// 无边框按钮
+.button-no-border {
+  .el-button {
+    border: none;
+  }
+}
+// 输入框边框
+.input-no-border {
+  .el-input__wrapper,
+  .el-select__wrapper,
+  .el-textarea__inner {
+    border: none;
+  }
+}
+// 新的表单样式
+.el-form-item {
+  .el-form-item__label {
+    color: var(--hd-title-text-color);
+  }
+}
+// 借助于auto-height-card类 创建空自适应高度盒子
+.auto-height-no-card {
+  .el-card__body {
+    padding: 0;
+    background-color: var(--hd-bg-color);
+  }
+  // .el-card.is-always-shadow {
+  //   box-shadow: none !important;
+  // }
+}
+// el-table清除悬浮色
+.clear-hover-bg {
+  .el-table__body tr.hover-row > td {
+    background-color: #fff !important;
+  }
+  // .el-table {
+  //   --el-table-row-hover-bg-color: #fff;
+  // }
+}
+// el-tabs清除下划线
+.el-tabs__nav-wrap::after {
+  display: none;
+}
+.el-tabs__active-bar {
+  height: 3px;
+  border-radius: 9px;
+}
+.el-tabs__item {
+  color: #808899;
+  font-weight: 400;
+}
+
+.el-date-editor .el-range__icon {
+  margin-right: 5px;
+}

@@ -1,0 +1,177 @@
+// 整体自适应布局
+@mixin base-scrollbar {
+  $-scrollbar-width: 7px;
+  &::-webkit-scrollbar {
+    width: $-scrollbar-width;
+    height: $-scrollbar-width;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(#bed8f7, 0.6);
+    border-radius: var(--el-border-radius-round);
+    transition: var(--el-transition-duration) background-color;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(#bed8f7, 1);
+    }
+  }
+  .el-scrollbar__thumb {
+    width: $-scrollbar-width;
+    height: $-scrollbar-width;
+    background-color: rgba(#bed8f7, 0.6);
+    border-radius: var(--el-border-radius-round);
+    transition: var(--el-transition-duration) background-color;
+    opacity: 1;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(#bed8f7, 1);
+    }
+  }
+}
+html {
+  body {
+    #app {
+      height: 100vh;
+      .grow-app-main {
+        background-color: var(--el-main-background);
+        overflow: hidden;
+        height: calc(100vh - var(--el-nav-height));
+        // padding: var(--el-padding);
+        > [class*="-hd-container"] {
+          min-height: var(--el-container-height);
+          background: var(--el-color-white);
+          // border: 1px solid var(--el-border-color);
+          border-radius: var(--el-border-radius-base);
+        }
+      }
+    }
+    * {
+      box-sizing: border-box;
+      // font-family: Arial, sans-serif;
+      font-family: var(--hd-font-family);
+      outline: none !important;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+
+      @include base-scrollbar;
+    }
+    // 去除背景
+    .no-background-container {
+      // padding: 0 !important;
+      // background: var(--el-background-color) !important;
+      background: var(--hd-bg-color) !important;
+      border: 0 !important;
+    }
+    /* 默认布局自动高度 */
+    :not(.no-background-container).auto-height-container {
+      display: flex;
+      flex-direction: column;
+      height: var(--el-container-height);
+
+      .el-table {
+        flex: 1;
+      }
+
+      .vab-auto-box {
+        flex: 1;
+        padding: var(--el-padding);
+        overflow-y: auto;
+
+        > .el-row {
+          margin-top: calc(0px - var(--el-margin));
+        }
+      }
+
+      @media (max-width: 1024px) {
+        height: auto;
+      }
+    }
+
+    /* 左右布局自动高度 */
+    .no-background-container.auto-height-container {
+      .auto-height-card {
+        margin-bottom: 0;
+
+        > .el-card__body {
+          display: flex;
+          flex-direction: column;
+          height: calc(var(--el-container-height) - 2px);
+
+          .el-table {
+            flex: 1;
+          }
+        }
+        &.has-bottom {
+          > .el-card__body {
+            height: calc(var(--el-container-height) - 2px - 20px); //自定义自适应
+          }
+        }
+        &.has-header {
+          > .el-card__body {
+            height: calc(var(--el-container-height) - 58px - 20px);
+          }
+        }
+        &.has-header-2 {
+          > .el-card__body {
+            height: calc(var(--el-container-height) - 105px - 20px); //自定义自适应
+          }
+        }
+        &.has-header-2-5 {
+          > .el-card__body {
+            height: calc(var(--el-container-height) - 133px - 20px); //自定义自适应
+          }
+        }
+        &.has-header-2-5-10 {
+          > .el-card__body {
+            height: calc(var(--el-container-height) - 133px - 10px - 20px); //自定义自适应
+          }
+        }
+      }
+
+      @media (max-width: 1024px) {
+        margin-bottom: calc(0 - var(--el-margin));
+
+        > .el-row {
+          > .el-col + .el-col {
+            .auto-height-card {
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        .auto-height-card {
+          margin-bottom: var(--el-margin);
+
+          > .el-card__body {
+            &:not(:has(.el-alert)) {
+              height: auto;
+            }
+          }
+
+          &.has-header {
+            margin-bottom: 0;
+
+            > .el-card__body {
+              height: auto;
+              min-height: calc(var(--el-container-height) - 57px);
+            }
+          }
+        }
+      }
+    }
+
+    :not(.auto-height-container).no-background-container {
+      > .el-row:has(.el-card) {
+        margin-bottom: calc(0px - var(--el-margin));
+      }
+    }
+    /* vab-data-empty占位图 */
+    .hd-data-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(var(--el-container-height) - 250px);
+      margin: auto;
+    }
+  }
+}

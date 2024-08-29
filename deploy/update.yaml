@@ -1,0 +1,105 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: <APP_NAME>
+  annotations:
+    prometheus.io/probe: "true"
+spec:
+  ports:
+    - port: <SERVICE_PORT>
+      targetPort: <SERVICE_PORT>
+      nodePort: 12000
+      name: http
+  type: NodePort
+  selector:
+    app: <APP_NAME>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <APP_NAME>
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 20%
+      maxUnavailable: 0
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: <APP_NAME>
+  replicas: <MINREPLICAS>
+  template:
+    metadata:
+      labels:
+        app: <APP_NAME>
+        version: "<VERSION>"
+        update_time: "<UPDATE_TIME>"
+    spec:
+      terminationGracePeriodSeconds: 10
+      serviceAccountName: huaplus
+      nodeSelector:
+        business: "true"
+      containers:
+        - name: <APP_NAME>
+          image: <REPOSITORY>/<PROJECTNAME>/<APP_NAME>:<BUILD_TAG>
+          resources:
+            limits:
+              memory: 1Gi
+              cpu: "2"
+            requests:
+              memory: 100Mi
+              cpu: "0.1"
+          ports:
+            - containerPort: <SERVICE_PORT>
+              name: http
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/nginx
+            - mountPath: /etc/nginx/ssl
+              name: tls-secret
+            - mountPath: /etc/nginx/nginx.conf
+              name: nginx-conf
+              readOnly: true
+              subPath: nginx.conf
+            - mountPath: /etc/nginx/conf.d
+              name: website-conf
+              readOnly: true
+            - name: record-data
+              mountPath: /data/record
+          readinessProbe: # 就绪探针
+            timeoutSeconds: 5 # 请求超时时间
+            periodSeconds: 5 # 请求间隔时间
+            initialDelaySeconds: 5 # 初始化后延迟多少秒执行
+            failureThreshold: 5 # 重试次数
+            httpGet:
+              port: 80
+              path: /
+              scheme: HTTP
+          livenessProbe: # 存活探针
+            timeoutSeconds: 5 # 请求超时时间
+            periodSeconds: 5 # 请求间隔时间
+            initialDelaySeconds: 5 # 初始化后延迟多少秒执行
+            failureThreshold: 5 # 重试次数
+            httpGet:
+              port: 80
+              path: /
+              scheme: HTTP
+      volumes:
+        - name: logs
+          hostPath:
+            path: /data/app/<APP_NAME>/logs
+        - name: tls-secret
+          secret:
+            secretName: huaplus-tls
+        - configMap:
+            name: nginx-conf
+          name: nginx-conf
+        - configMap:
+            name: website-account-conf
+          name: website-conf
+        - name: record-data
+          persistentVolumeClaim:
+            claimName: record-data
+

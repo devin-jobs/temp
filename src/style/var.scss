@@ -1,0 +1,23 @@
+// 需考虑继承到子应用风险
+:root {
+  --el-padding: 20px; //通用内边距
+  --el-margin: 20px; //通用外边距
+  --el-nav-border-radius: 0 40px 40px 0; //左侧导航栏
+  --el-main-background: #f1f5fb; //主题背景色
+  --hd-bg-color: #f1f5fb; //通用背景色
+  --el-border-radius-base: 8px !important;
+  --el-menu-background: #ffffff; //左侧导航背景色
+  --el-nav-background: #f1f5fb; //顶部导航背景色
+  --el-nav-height: 70px; //顶部导航栏高度
+  --el-nav-min-height: 48px; //顶部导航栏高度
+  --el-footer-height: 50px; //底部栏高度
+  --el-main-content: 20px; //内容区边距
+  --hd-title-text-color: #2b2b2b; //通用标题文字颜色
+  --el-color-primary: #3370ff; //主题色
+  --el-color-primary-light-9: rgba(71, 139, 255, 0.1);
+  --el-card-border-radius: 20px; //卡片圆角
+  --el-container-height: calc(100vh - var(--el-nav-height) - var(--el-padding));
+  // --el-container-height: calc(100vh - var(--el-nav-height) - var(--el-padding) * 3 - var(--el-footer-height));
+  --hd-font-family: HarmonyOS-Regular, serif, sans-serif; // 全局字体
+  --el-text-color-secondary: #b0b0bc; //重置缺省文字颜色
+}
